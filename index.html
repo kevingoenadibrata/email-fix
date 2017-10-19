@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>Email Fix</title>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+    <meta charset='utf-8'>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="jquery-3.2.1.min.js"></script>
+  </head>
+
+  <body onload="init()">
+    <!-- main code -->
+    <div id="bg">
+      <div id="container">
+          <h1>Email Fix!</h1>
+          <div class="contentContainer">
+            <h3>Valid Domain List</h3>
+            <input type="text" id="domains"/>
+            <button class="button" id="addDomain">add</button>
+            <p id="domainList"></p>
+          </div>
+
+          <div class="contentContainer">
+            <h3>Upload CSV</h3>
+            <input type="file" id="inputCsv" accept=".csv" onchange="handleFiles(this.files)"/>
+          </div>
+
+          <div class="contentContainer">
+            <h3>Tolerance Level</h3>
+            <p id="sliderLabel">1</p>
+            <input type="range" id="tolerance" min="1" max="8" value="1"/>
+          </div>
+
+          <div class="contentContainer" style="text-align: center;">
+            <button class="button" id="download">Generate</button>
+          </div>
+
+          <div id="footer"><p class="copyright">Copyright &copy; 2017 Kevin Goenadibrata</p></div>
+      </div>
+    </div>
+
+
+    <script src="app.js"></script>
+  </body>
+
+</html>
