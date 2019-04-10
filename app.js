@@ -16,6 +16,7 @@ function initMaster(){
   master = [];
   var header = ["EMAILS", "ORIGINAL EMAILS", "VALIDITY", "ID", "DOMAIN", "CORRECTED DOMAIN", "ERROR SCORE", "NOTES"];
   master.push(header);
+
 }
 
 function domainObj(name){
@@ -100,6 +101,11 @@ domField.keyup(function(event){
 
 //create new domain from text field
 addButton.on('click', function(){
+  var regx = /^\w+(\.\w+)+$/;
+  if(!regx.test(domField.val().toLowerCase())){
+      alert("Not a valid domain");
+      return;
+  }
   if(domField.val() != ""){
     createDomain(domField.val().toLowerCase());
     domField.val("");
@@ -152,9 +158,12 @@ genButton.on('click', function(){
       master.push([email[i].name, email[i].name, email[i].valid, email[i].id, email[i].domain, "-", "-", "Outside Tolerance Level"]);
     }
   }
-  arrayToCSV(master);
+  arrayToCSV(master, false);
 });
 
+function downloadTemplate(){
+  arrayToCSV([["Emails"], ["enter emails in this column"]], true);
+}
 
 // READ FILES SECTION
 //******************************************************************************
@@ -165,6 +174,7 @@ function handleFiles(files) {
 	// Check for the various File API support.
 	if (window.FileReader) {
 		// FileReader are supported.
+    console.log(inputFile.val());
     var name = inputFile.val().split('\\').pop();
     filename = name.substring(0, name.indexOf('.'));
 
@@ -277,7 +287,7 @@ function findInvalid(){
   }
 }
 
-function arrayToCSV (twoDiArray) {
+function arrayToCSV (twoDiArray, isTemplate) {
     //  export-javascript-data-to-csv-file-without-server-interaction
     var csvRows = [];
     for (var i = 0; i < twoDiArray.length; ++i) {
@@ -293,6 +303,7 @@ function arrayToCSV (twoDiArray) {
     a.href        = href2;
     a.target      = '_blank';
     a.download    = filename + '_fixed.csv';
+    if(isTemplate) a.download = "template_emailfix.csv";
     a.id          = 'output';
 
 
